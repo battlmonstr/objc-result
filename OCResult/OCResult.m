@@ -41,7 +41,7 @@
     return _error;
 }
 
-- (OCResult *)map:(id (^)(id value))transform {
+- (OCResult *)map:(id (^ NS_NOESCAPE)(id value))transform {
     NSParameterAssert(transform);
     switch (_kind) {
         case OCResultSuccess:
@@ -51,7 +51,7 @@
     }
 }
 
-- (OCResult *)mapError:(NSError *(^)(NSError *error))transform {
+- (OCResult *)mapError:(NSError *(^ NS_NOESCAPE)(NSError *error))transform {
     NSParameterAssert(transform);
     switch (_kind) {
         case OCResultSuccess:

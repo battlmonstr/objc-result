@@ -2,7 +2,7 @@
 
 @implementation OCResult (BlockAdapters)
 
-- (void)performBlock:(void (^)(id value, NSError *error))block {
+- (void)performBlock:(void (^ NS_NOESCAPE)(id value, NSError *error))block {
     NSParameterAssert(block);
     switch (self.kind) {
         case OCResultSuccess:
@@ -14,8 +14,8 @@
     }
 }
 
-- (void)performSuccessBlock:(void (^)(id value))successBlock
-             orFailureBlock:(void (^)(NSError *error))failureBlock
+- (void)performSuccessBlock:(void (^ NS_NOESCAPE)(id value))successBlock
+             orFailureBlock:(void (^ NS_NOESCAPE)(NSError *error))failureBlock
 {
     NSParameterAssert(successBlock);
     NSParameterAssert(failureBlock);

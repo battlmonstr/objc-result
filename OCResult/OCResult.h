@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, OCResultKind) {
 @property (readonly, nonnull) id value;
 @property (readonly, nonnull) NSError *error;
 
-- (nonnull OCResult *)map:(id _Nonnull (^ _Nonnull)(id _Nonnull value))transform;
-- (nonnull OCResult *)mapError:(NSError * _Nonnull (^ _Nonnull)(NSError * _Nonnull error))transform;
+- (nonnull OCResult *)map:(id _Nonnull (^ _Nonnull NS_NOESCAPE)(id _Nonnull value))transform;
+- (nonnull OCResult *)mapError:(NSError * _Nonnull (^ _Nonnull NS_NOESCAPE)(NSError * _Nonnull error))transform;
 
 @end
