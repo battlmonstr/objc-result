@@ -1,5 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "OCResult.h"
+#import "OCResult+BlockAdapters.h"
 
 @interface Tests : XCTestCase
 @end
@@ -118,6 +119,42 @@
     NSError *error = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
     OCResult *result = [OCResult failure:error];
     XCTAssertEqual([result hash], [error hash]);
+}
+
+- (void)test_perform_block_of_success {
+    NSString *expectedValue = @"hello";
+    OCResult *result = [OCResult success:expectedValue];
+    [result performBlock:^(id value, NSError *error) {
+        XCTAssertEqual(value, expectedValue);
+        XCTAssertNil(error);
+    }];
+}
+
+- (void)test_perform_block_of_failure {
+    NSError *expectedError = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result = [OCResult failure:expectedError];
+    [result performBlock:^(id value, NSError *error) {
+        XCTAssertNil(value);
+        XCTAssertEqual(error, expectedError);
+    }];
+}
+
+- (void)test_perform_success_block_of_success {
+    NSString *expectedValue = @"hello";
+    OCResult *result = [OCResult success:expectedValue];
+    __block id actualValue = nil;
+    [result performSuccessBlock:^(id value) { actualValue = value; }
+                 orFailureBlock:^(NSError *error) { XCTFail("The failure block must not be called on a success result."); }];
+    XCTAssertEqual(actualValue, expectedValue);
+}
+
+- (void)test_perform_failure_block_of_failure {
+    NSError *expectedError = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result = [OCResult failure:expectedError];
+    __block id actualError = nil;
+    [result performSuccessBlock:^(id value) { XCTFail("The success block must not be called on a failure result."); }
+                 orFailureBlock:^(NSError *error) { actualError = error; }];
+    XCTAssertEqual(actualError, expectedError);
 }
 
 @end

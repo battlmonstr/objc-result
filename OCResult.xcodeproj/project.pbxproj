@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65CC0A762381C374008B2BA8 /* OCResult+BlockAdapters.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC0A742381C374008B2BA8 /* OCResult+BlockAdapters.h */; };
+		65CC0A772381C374008B2BA8 /* OCResult+BlockAdapters.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC0A752381C374008B2BA8 /* OCResult+BlockAdapters.m */; };
+		65CC0A792381C65F008B2BA8 /* OCResult+BlockAdapters.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC0A752381C374008B2BA8 /* OCResult+BlockAdapters.m */; };
 		65E67E2E2381AFA100E4DAEF /* OCResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67E2D2381AFA100E4DAEF /* OCResult.h */; };
 		65E67E302381AFA100E4DAEF /* OCResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E67E2F2381AFA100E4DAEF /* OCResult.m */; };
 		65E67E3D2381AFC700E4DAEF /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E67E3C2381AFC700E4DAEF /* Tests.m */; };
@@ -24,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65CC0A742381C374008B2BA8 /* OCResult+BlockAdapters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCResult+BlockAdapters.h"; sourceTree = "<group>"; };
+		65CC0A752381C374008B2BA8 /* OCResult+BlockAdapters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "OCResult+BlockAdapters.m"; sourceTree = "<group>"; };
 		65E67E2A2381AFA100E4DAEF /* libOCResult.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOCResult.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67E2D2381AFA100E4DAEF /* OCResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCResult.h; sourceTree = "<group>"; };
 		65E67E2F2381AFA100E4DAEF /* OCResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCResult.m; sourceTree = "<group>"; };
@@ -74,6 +79,8 @@
 			children = (
 				65E67E2D2381AFA100E4DAEF /* OCResult.h */,
 				65E67E2F2381AFA100E4DAEF /* OCResult.m */,
+				65CC0A742381C374008B2BA8 /* OCResult+BlockAdapters.h */,
+				65CC0A752381C374008B2BA8 /* OCResult+BlockAdapters.m */,
 			);
 			path = OCResult;
 			sourceTree = "<group>";
@@ -95,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65E67E2E2381AFA100E4DAEF /* OCResult.h in Headers */,
+				65CC0A762381C374008B2BA8 /* OCResult+BlockAdapters.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CC0A772381C374008B2BA8 /* OCResult+BlockAdapters.m in Sources */,
 				65E67E302381AFA100E4DAEF /* OCResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CC0A792381C65F008B2BA8 /* OCResult+BlockAdapters.m in Sources */,
 				65E67E3D2381AFC700E4DAEF /* Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
