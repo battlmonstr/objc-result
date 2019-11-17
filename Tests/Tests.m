@@ -23,11 +23,11 @@
 - (void)test_map_of_success {
     OCResult *result1 = [OCResult success:@"hello1"];
     OCResult *result2 = [result1 map:^(id value) {
-        XCTAssertEqual(value, @"hello1");
+        XCTAssertEqualObjects(value, @"hello1");
         return @"hello2";
     }];
     XCTAssertEqual(result2.kind, OCResultSuccess);
-    XCTAssertEqual(result2.value, @"hello2");
+    XCTAssertEqualObjects(result2.value, @"hello2");
 }
 
 - (void)test_map_of_failure {
@@ -38,7 +38,7 @@
         return @"hello";
     }];
     XCTAssertEqual(result2.kind, OCResultFailure);
-    XCTAssertEqual(result2.error, error);
+    XCTAssertEqualObjects(result2.error, error);
 }
 
 - (void)test_map_error_of_success {
@@ -48,7 +48,7 @@
         return error;
     }];
     XCTAssertEqual(result2.kind, OCResultSuccess);
-    XCTAssertEqual(result2.value, @"hello");
+    XCTAssertEqualObjects(result2.value, @"hello");
 }
 
 - (void)test_map_error_of_failure {
@@ -61,6 +61,63 @@
     }];
     XCTAssertEqual(result2.kind, OCResultFailure);
     XCTAssertEqual(result2.error, error2);
+}
+
+- (void)test_not_equal_to_nil {
+    OCResult *result = [OCResult success:@"hello"];
+    XCTAssertFalse([result isEqual:nil]);
+}
+
+- (void)test_not_equal_to_string {
+    OCResult *result = [OCResult success:@"hello"];
+    XCTAssertNotEqualObjects(result, @"hello");
+}
+
+- (void)test_success_not_equal_to_failure {
+    OCResult *success = [OCResult success:@"hello"];
+    NSError *error = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *failure = [OCResult failure:error];
+    XCTAssertNotEqualObjects(success, failure);
+    XCTAssertNotEqualObjects(failure, success);
+}
+
+- (void)test_equal_successes {
+    OCResult *result1 = [OCResult success:@"hello"];
+    OCResult *result2 = [OCResult success:@"hello"];
+    XCTAssertEqualObjects(result1, result2);
+}
+
+- (void)test_not_equal_successes {
+    OCResult *result1 = [OCResult success:@"hello1"];
+    OCResult *result2 = [OCResult success:@"hello2"];
+    XCTAssertNotEqualObjects(result1, result2);
+}
+
+- (void)test_equal_failures {
+    NSError *error = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result1 = [OCResult failure:error];
+    OCResult *result2 = [OCResult failure:error];
+    XCTAssertEqualObjects(result1, result2);
+}
+
+- (void)test_not_equal_failures {
+    NSError *error1 = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    NSError *error2 = [NSError errorWithDomain:@"example.com" code:2 userInfo:nil];
+    OCResult *result1 = [OCResult failure:error1];
+    OCResult *result2 = [OCResult failure:error2];
+    XCTAssertNotEqualObjects(result1, result2);
+}
+
+- (void)test_hash_of_success {
+    NSString *value = @"hello";
+    OCResult *result = [OCResult success:value];
+    XCTAssertEqual([result hash], [value hash]);
+}
+
+- (void)test_hash_of_failure {
+    NSError *error = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result = [OCResult failure:error];
+    XCTAssertEqual([result hash], [error hash]);
 }
 
 @end

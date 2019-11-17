@@ -61,12 +61,27 @@
     }
 }
 
-//- (NSUInteger)hash {
-//    // TODO
-//}
-//
-//- (BOOL)isEqual:(id)object {
-//    // TODO
-//}
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[OCResult class]])
+        return NO;
+    OCResult *other = object;
+    if (_kind != other->_kind)
+        return NO;
+    switch (_kind) {
+        case OCResultSuccess:
+            return [_value isEqual:other->_value];
+        case OCResultFailure:
+            return [_error isEqual:other->_error];
+    }
+}
+
+- (NSUInteger)hash {
+    switch (_kind) {
+        case OCResultSuccess:
+            return [_value hash];
+        case OCResultFailure:
+            return [_error hash];
+    }
+}
 
 @end
