@@ -151,9 +151,33 @@
 - (void)test_perform_failure_block_of_failure {
     NSError *expectedError = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
     OCResult *result = [OCResult failure:expectedError];
-    __block id actualError = nil;
+    __block NSError *actualError = nil;
     [result performSuccessBlock:^(id value) { XCTFail("The success block must not be called on a failure result."); }
                  orFailureBlock:^(NSError *error) { actualError = error; }];
+    XCTAssertEqual(actualError, expectedError);
+}
+
+- (void)test_wrap_block_passes_success {
+    NSString *expectedValue = @"hello";
+    void (^resultBlock)(OCResult *result);
+    __block id actualValue = nil;
+    resultBlock = [OCResult wrapBlock:^(id value, NSError *error) {
+        actualValue = value;
+        XCTAssertNil(error);
+    }];
+    resultBlock([OCResult success:expectedValue]);
+    XCTAssertEqual(actualValue, expectedValue);
+}
+
+- (void)test_wrap_block_passes_failure {
+    NSError *expectedError = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    void (^resultBlock)(OCResult *result);
+    __block NSError *actualError = nil;
+    resultBlock = [OCResult wrapBlock:^(id value, NSError *error) {
+        XCTAssertNil(value);
+        actualError = error;
+    }];
+    resultBlock([OCResult failure:expectedError]);
     XCTAssertEqual(actualError, expectedError);
 }
 

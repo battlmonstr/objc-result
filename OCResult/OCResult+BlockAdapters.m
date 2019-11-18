@@ -29,4 +29,11 @@
     }
 }
 
++ (void (^)(OCResult *result))wrapBlock:(void (^)(id value, NSError *error))block {
+    NSParameterAssert(block);
+    return ^(OCResult *result) {
+        [result performBlock:block];
+    };
+}
+
 @end

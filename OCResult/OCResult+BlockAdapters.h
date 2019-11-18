@@ -8,4 +8,6 @@
 - (void)performSuccessBlock:(void (^ _Nonnull NS_NOESCAPE)(id _Nonnull value))successBlock
              orFailureBlock:(void (^ _Nonnull NS_NOESCAPE)(NSError * _Nonnull error))failureBlock;
 
++ (void (^ _Nonnull)(OCResult * _Nonnull result))wrapBlock:(void (^ _Nonnull)(id _Nullable value, NSError * _Nullable error))block;
+
 @end
