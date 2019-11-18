@@ -5,8 +5,7 @@ on: push
 jobs:
   test:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
+    - name: xcodebuild test
       run: xcodebuild test -scheme Tests
