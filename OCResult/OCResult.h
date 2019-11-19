@@ -21,4 +21,7 @@ typedef NS_ENUM(NSUInteger, OCResultKind) {
 - (nonnull OCResult *)map:(id _Nonnull (^ _Nonnull NS_NOESCAPE)(id _Nonnull value))transform;
 - (nonnull OCResult *)mapError:(NSError * _Nonnull (^ _Nonnull NS_NOESCAPE)(NSError * _Nonnull error))transform;
 
+- (nonnull OCResult *)flatMap:(OCResult * _Nonnull (^ _Nonnull NS_NOESCAPE)(id _Nonnull value))transform;
+- (nonnull OCResult *)flatMapError:(OCResult * _Nonnull (^ _Nonnull NS_NOESCAPE)(NSError * _Nonnull error))transform;
+
 @end

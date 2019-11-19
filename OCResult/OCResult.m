@@ -61,6 +61,26 @@
     }
 }
 
+- (OCResult *)flatMap:(OCResult *(^ NS_NOESCAPE)(id value))transform {
+    NSParameterAssert(transform);
+    switch (_kind) {
+        case OCResultSuccess:
+            return transform(_value);
+        case OCResultFailure:
+            return self;
+    }
+}
+
+- (OCResult *)flatMapError:(OCResult *(^ NS_NOESCAPE)(NSError *error))transform {
+    NSParameterAssert(transform);
+    switch (_kind) {
+        case OCResultSuccess:
+            return self;
+        case OCResultFailure:
+            return transform(_error);
+    }
+}
+
 - (BOOL)isEqual:(id)object {
     if (![object isKindOfClass:[OCResult class]])
         return NO;

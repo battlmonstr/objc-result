@@ -64,6 +64,46 @@
     XCTAssertEqual(result2.error, error2);
 }
 
+- (void)test_flat_map_of_success {
+    OCResult *expectedResult = [OCResult success:@"hello2"];
+    OCResult *result1 = [OCResult success:@"hello1"];
+    OCResult *result2 = [result1 flatMap:^(id value) {
+        XCTAssertEqualObjects(value, @"hello1");
+        return expectedResult;
+    }];
+    XCTAssertEqual(result2, expectedResult);
+}
+
+- (void)test_flat_map_of_failure {
+    NSError *error = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result1 = [OCResult failure:error];
+    OCResult *result2 = [result1 flatMap:^(id value) {
+        XCTFail(@"The success value transform must not be called on a failure result.");
+        return [OCResult success:@"hello"];
+    }];
+    XCTAssertEqual(result2, result1);
+}
+
+- (void)test_flat_map_error_of_success {
+    OCResult *result1 = [OCResult success:@"hello1"];
+    OCResult *result2 = [result1 flatMapError:^(NSError *error) {
+        XCTFail(@"The failure transform must not be called on a success result.");
+        return [OCResult success:@"hello2"];
+    }];
+    XCTAssertEqual(result2, result1);
+}
+
+- (void)test_flat_map_error_of_failure {
+    OCResult *expectedResult = [OCResult success:@"hello"];
+    NSError *error1 = [NSError errorWithDomain:@"example.com" code:1 userInfo:nil];
+    OCResult *result1 = [OCResult failure:error1];
+    OCResult *result2 = [result1 flatMapError:^(NSError *error) {
+        XCTAssertEqual(error, error1);
+        return expectedResult;
+    }];
+    XCTAssertEqual(result2, expectedResult);
+}
+
 - (void)test_not_equal_to_nil {
     OCResult *result = [OCResult success:@"hello"];
     XCTAssertFalse([result isEqual:nil]);
