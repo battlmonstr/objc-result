@@ -2,3 +2,6 @@
 .idea
 xcuserdata
 /docs
+
+# bazel symlinks
+bazel-*
